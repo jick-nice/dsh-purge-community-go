@@ -382,8 +382,8 @@ node scripts/build-dist.mjs      # 生成 dist/：tar.gz + zip + SHA256SUMS + ma
 
 脚本做四件事，任何一步失败都直接非零退出（不会把空壳当产物发出去）：
 
-1. `tar` 打包（排除 `.git` / `node_modules` / `dist` / `*.log`）到 `dist/dsh-purge-community-go-<版本>.tar.gz`；
-2. 顺手出 `zip`（优先 bsdtar `-a`，其次 `zip` 命令，Windows 兜底 Compress-Archive；都没有就只出 tar.gz）；
+1. 按**白名单**把 52 个文件复制到临时 stage 目录（`lib/ patches/ assets/ scripts/ docs/ test/` 与各 README、许可证），再从 stage 打 `dist/dsh-purge-community-go-<版本>.tar.gz`——`.git` / `dist` / `node_modules` / 日志天然进不去；
+2. 顺手出 `zip`（`zip` 命令 → bsdtar `-a` → Windows 的 Compress-Archive 依次尝试，写完查 PK 魔数；都不行就只出 tar.gz）；
 3. **解包到临时目录回校验**：13 个关键文件齐全 + 归档里的版本号与 `package.json` 一致；
 4. 写 `manifest.json`（逐文件 sha256）、`SHA256SUMS`、`RELEASE_NOTES.md`（中文安装步骤 + 校验值）。
 
