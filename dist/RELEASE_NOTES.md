@@ -1,4 +1,4 @@
-# dsh-purge-community-go v1.0.0
+# dsh-purge-community-go v1.0.1
 
 把 **dsh-purge-community**（社区维护版破甲）搬成 **dsh-go** 手机端原生插件：
 内容用社区版（88 条补丁表 + 注入正文 + boost / 探针 / 注入位置 / 题材分类），
@@ -8,16 +8,16 @@
 
 | 文件 | 大小 | SHA-256 |
 |---|---|---|
-| `dsh-purge-community-go-1.0.0.tar.gz` | 166.7 KB | `68ded26f5327cb0d1dde372dd7a87c55dad3799e0e64b7bd8321a029a8089c27` |
-| `dsh-purge-community-go-1.0.0.zip` | 197.7 KB | `db2f2c504fc6e812dfe495cdcf32cc8cda16348309055d6d3dbb50d3a7a532a0` |
+| `dsh-purge-community-go-1.0.1.tar.gz` | 167.6 KB | `c0875119ac5ecafa4ab6ca46af029fbac27b1a6a2e0251be09cbc52490fa7cb4` |
+| `dsh-purge-community-go-1.0.1.zip` | 198.7 KB | `4f1bc69a81b46a12aa02dd1c4b3aa32f91569a37d853bca920753a5b9e4755eb` |
 
-构建时间：2026-11-20T16:42:59.729Z · Node v22.23.4 · win32-x64
+构建时间：2026-11-20T16:43:56.541Z · Node v22.23.4 · win32-x64
 
 ## 手机安装（Android + proot）
 
 ```sh
 mkdir -p ~/src && cd ~/src
-curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.0/dsh-purge-community-go-1.0.0.tar.gz
+curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.1/dsh-purge-community-go-1.0.1.tar.gz
 tar -xzf pg.tar.gz && mv dsh-purge-community-go ~/ && cd ~/dsh-purge-community-go
 
 sh install.sh --dry     # 只扫不打
@@ -30,7 +30,7 @@ am force-stop io.github.ccch1mneyyy.dsh_app   # 重启引擎
 ## 校验
 
 ```sh
-sha256sum dsh-purge-community-go-1.0.0.tar.gz    # 与上表对应
+sha256sum dsh-purge-community-go-1.0.1.tar.gz    # 与上表对应
 ```
 
 ## 内容

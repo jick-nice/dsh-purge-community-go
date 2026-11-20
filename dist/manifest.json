@@ -1,26 +1,26 @@
 {
   "name": "dsh-purge-community-go",
-  "version": "1.0.0",
-  "builtAt": "2026-11-20T16:42:59.729Z",
+  "version": "1.0.1",
+  "builtAt": "2026-11-20T16:43:56.541Z",
   "node": "v22.23.4",
   "platform": "win32-x64",
   "artifacts": [
     {
-      "file": "dsh-purge-community-go-1.0.0.tar.gz",
-      "bytes": 170687,
-      "sha256": "68ded26f5327cb0d1dde372dd7a87c55dad3799e0e64b7bd8321a029a8089c27"
+      "file": "dsh-purge-community-go-1.0.1.tar.gz",
+      "bytes": 171634,
+      "sha256": "c0875119ac5ecafa4ab6ca46af029fbac27b1a6a2e0251be09cbc52490fa7cb4"
     },
     {
-      "file": "dsh-purge-community-go-1.0.0.zip",
-      "bytes": 202468,
-      "sha256": "db2f2c504fc6e812dfe495cdcf32cc8cda16348309055d6d3dbb50d3a7a532a0"
+      "file": "dsh-purge-community-go-1.0.1.zip",
+      "bytes": 203438,
+      "sha256": "4f1bc69a81b46a12aa02dd1c4b3aa32f91569a37d853bca920753a5b9e4755eb"
     }
   ],
   "files": [
     {
       "path": "CHANGELOG.md",
-      "bytes": 2580,
-      "sha256": "11493e2478a1c59f1ab93e5340d843499383134607f775b94d934f130d65c350"
+      "bytes": 4353,
+      "sha256": "1ad016d123a5074a9350a9f320ae873268aee7d76e2dae7f32d7f50542095b72"
     },
     {
       "path": "LICENSE",
@@ -170,7 +170,7 @@
     {
       "path": "package.json",
       "bytes": 2979,
-      "sha256": "a1eefa401621012f09f0ab0bbb10a7d92a9467cd3e11c59f0822570f7eef7454"
+      "sha256": "4e43e45f6bbff0ff93942960936fd481aef5b19b203d6e0f3d0665499331337d"
     },
     {
       "path": "patches/lib/core.mjs",
