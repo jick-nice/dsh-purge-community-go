@@ -1,19 +1,19 @@
 {
   "name": "dsh-purge-community-go",
   "version": "1.0.0",
-  "builtAt": "2026-11-20T15:18:58.814Z",
+  "builtAt": "2026-11-20T15:23:42.303Z",
   "node": "v22.23.4",
   "platform": "win32-x64",
   "artifacts": [
     {
       "file": "dsh-purge-community-go-1.0.0.tar.gz",
-      "bytes": 170794,
-      "sha256": "90d9459083d45ad79a0089907379ffaad47b8be25f152b01a9d21b56c4aadda2"
+      "bytes": 165944,
+      "sha256": "01bd8ee8d860f710640a41b85f5ea8b41e1b40a03e9bd9237adccfd27195dd78"
     },
     {
       "file": "dsh-purge-community-go-1.0.0.zip",
-      "bytes": 202036,
-      "sha256": "7cd95e8d03bb7bcf3cda554976a3ea5eeb0657588c37d64affd91cda8107006d"
+      "bytes": 196925,
+      "sha256": "7781517b12e9b73194f89e051d99374f196586e0b4974cc70591126a47a64f2f"
     }
   ],
   "files": [
@@ -39,13 +39,13 @@
     },
     {
       "path": "README.en.md",
-      "bytes": 9623,
-      "sha256": "bf427e08786fbd5cdcc1145bbbb76045b395c3ce3e5a9ce5022416adebc89635"
+      "bytes": 9185,
+      "sha256": "9c8413c4495f00ea06ae604926d553a821be01f1790d1965fa7c7dc93f5476e3"
     },
     {
       "path": "README.md",
-      "bytes": 19403,
-      "sha256": "574720eea5333f6366dc4a36be8706190bbcd17239f2ba69d287a09c6a484c39"
+      "bytes": 9588,
+      "sha256": "e31c32ce13872b7f518da6ab5fba877da556ec6fca9e314936529eec0b2f5032"
     },
     {
       "path": "assets/categories.json",
