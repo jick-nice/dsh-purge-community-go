@@ -1,36 +1,51 @@
 {
   "name": "dsh-purge-community-go",
   "version": "1.0.0",
-  "builtAt": "2026-11-20T15:03:50.624Z",
+  "builtAt": "2026-11-20T15:13:07.197Z",
   "node": "v22.23.4",
   "platform": "win32-x64",
   "artifacts": [
     {
       "file": "dsh-purge-community-go-1.0.0.tar.gz",
-      "bytes": 171539,
-      "sha256": "9001ec90d057012e87d5b75f15c4f0c4835b3c969d395a37205206a92e8dd52e"
+      "bytes": 173799,
+      "sha256": "a1e4ca8e1301959e7948a2b30f26bbb14b54133f8facdbf495fec8038e6ccbcd"
     },
     {
       "file": "dsh-purge-community-go-1.0.0.zip",
-      "bytes": 204156,
-      "sha256": "fa0727fccf46ea424218b195b0e350409ea2866e8eb272de506169e389647057"
+      "bytes": 208297,
+      "sha256": "da9bcf845604d733dfbcc3d3f1ece77422d9d0731ed78b03dac3cb53788ea067"
     }
   ],
   "files": [
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 883,
-      "sha256": "0e54d5300abe23198d0db6db9726ae322fc9d9b415aa4421ec37aff3f11848f3"
+      "bytes": 905,
+      "sha256": "7a0e039908f9ac07d950f7fe61eeafaec9ca469b51d70d38ee8914073be96ddd"
     },
     {
       "path": ".github/workflows/release.yml",
-      "bytes": 1786,
-      "sha256": "208e065556298085ad0508d2bb367f8e9fcc5b5448737a53084035893004f8a9"
+      "bytes": 1808,
+      "sha256": "c0a0937364b1e726f481d16c3e3d5df427cb7d3a5abbdcaf36984d2dd7b2a72a"
     },
     {
       "path": ".gitignore",
       "bytes": 264,
       "sha256": "a1b20541d50bb35e42f59743a1403ae38dd8c0568e0005fc053aeee6077690d9"
+    },
+    {
+      "path": ".tmp-check.mjs",
+      "bytes": 2607,
+      "sha256": "4023659b7b928bd1c7bde39dd889ce130f8c245bf50be06f75b9ebe2235c754a"
+    },
+    {
+      "path": ".tmp-runinfo.mjs",
+      "bytes": 1735,
+      "sha256": "731d45e466c900eae3c676b17cc119f9be218ec251bf4ba2037d07e64f746299"
+    },
+    {
+      "path": ".tmp-zipcheck.mjs",
+      "bytes": 1915,
+      "sha256": "12184b4d5b3617bc39bfa54bba4fd65fd82c269f05c21b9acfb08af228c9abb3"
     },
     {
       "path": "CHANGELOG.md",
@@ -204,8 +219,8 @@
     },
     {
       "path": "scripts/build-dist.mjs",
-      "bytes": 8968,
-      "sha256": "7ec7d818a80e09c757ef7ddbbec2b776e6f6dcb9a2b30f58103c5d9a8c0138b2"
+      "bytes": 9974,
+      "sha256": "6bf9f53682e2d652533d6ec7ce78b913f4c96644a59a8de3a74f03edd09976b8"
     },
     {
       "path": "scripts/embed-default-prompt.mjs",

@@ -59,6 +59,17 @@ function sha256(file) {
   return createHash('sha256').update(fs.readFileSync(file)).digest('hex')
 }
 
+/** 真的是 zip 吗？GNU tar 会把 .zip 写成 tar 流，光看退出码会当成功。 */
+function isZip(file) {
+  try {
+    const sig = fs.readFileSync(file).subarray(0, 4).toString('hex')
+    // 504b0304 普通 / 504b0506 空归档 / 504b0708 分卷
+    return sig === '504b0304' || sig === '504b0506' || sig === '504b0708'
+  } catch {
+    return false
+  }
+}
+
 function walk(dir, base = '') {
   const out = []
   for (const entry of fs.readdirSync(path.join(dir, base), { withFileTypes: true })) {
@@ -87,27 +98,47 @@ function main() {
   console.log(`✔ ${path.relative(PKG_DIR, tarball)}  ${(fs.statSync(tarball).size / 1024).toFixed(1)} KB`)
 
   // ── zip（可选）─────────────────────────────────────────────────────
-  // 三种实现按可用性依次尝试：bsdtar -a（Windows 自带 tar 就能出 zip，且支持 --exclude）、
-  // GNU zip 命令（CI 上一般都有）、PowerShell Compress-Archive（兜底，但不支持排除规则）。
+  // 注意：GNU tar 的 -a 是「按扩展名自动压缩」，把 .zip 当普通 tar 写——产出有 600 KB 却不是 zip。
+  // 所以按平台选顺序，并且**不看退出码就当成功**：写完必须验 ZIP 魔数。
+  //   Windows：tar.exe 是 bsdtar，-a 能出真 zip；否则退 Compress-Archive。
+  //   Linux/macOS：先 zip 命令；再退 bsdtar -a。
   const zipFile = path.join(OUT_DIR, `${BASE}.zip`)
-  const bsdtarArgs = ['-a', '-cf', zipFile]
-  for (const pattern of EXCLUDES) bsdtarArgs.push(`--exclude=${pattern}`)
-  bsdtarArgs.push(NAME)
-  let zipped = run('tar', bsdtarArgs)
-  if (!zipped) {
-    const zipArgs = ['-qr', zipFile, NAME]
-    for (const pattern of EXCLUDES) zipArgs.push('-x', `${NAME}/${pattern}`)
-    zipped = run('zip', zipArgs)
+  const excludes = EXCLUDES
+  const tryBsdtarZip = () => {
+    const args = ['-a', '-cf', zipFile]
+    for (const pattern of excludes) args.push(`--exclude=${pattern}`)
+    args.push(NAME)
+    return run('tar', args) && isZip(zipFile)
   }
-  if (!zipped && process.platform === 'win32') {
-    zipped = run('powershell', [
-      '-NoProfile',
-      '-Command',
-      `Compress-Archive -Path '${PKG_DIR}\\${NAME}' -DestinationPath '${zipFile}' -Force`,
-    ])
+  const tryZipCommand = () => {
+    const args = ['-qr', zipFile, NAME]
+    for (const pattern of excludes) args.push('-x', `${NAME}/${pattern}`)
+    return run('zip', args) && isZip(zipFile)
+  }
+  const tryCompressArchive = () => {
+    if (process.platform !== 'win32') return false
+    return (
+      run('powershell', [
+        '-NoProfile',
+        '-Command',
+        `Compress-Archive -Path '${PKG_DIR}\\${NAME}' -DestinationPath '${zipFile}' -Force`,
+      ]) && isZip(zipFile)
+    )
+  }
+
+  const zipAttempts = process.platform === 'win32'
+    ? [tryBsdtarZip, tryCompressArchive, tryZipCommand]
+    : [tryZipCommand, tryBsdtarZip, tryCompressArchive]
+  let zipped = false
+  for (const attempt of zipAttempts) {
+    if (attempt()) {
+      zipped = true
+      break
+    }
+    fs.rmSync(zipFile, { force: true })
   }
   if (zipped) console.log(`✔ ${path.relative(PKG_DIR, zipFile)}  ${(fs.statSync(zipFile).size / 1024).toFixed(1)} KB`)
-  else console.log('· 跳过 zip（本机没有可用的 zip 实现），tar.gz 已足够')
+  else console.log('· 跳过 zip（本机没有能产出合法 zip 的工具），tar.gz 已足够')
 
   // ── 校验：解包到临时目录，核对关键文件 ───────────────────────────────
   if (!noVerify) {
