@@ -9,8 +9,11 @@
 [![release](https://img.shields.io/github/v/release/jick-nice/dsh-purge-community-go?label=release&color=2ea44f)](https://github.com/jick-nice/dsh-purge-community-go/releases)
 [![ci](https://github.com/jick-nice/dsh-purge-community-go/actions/workflows/ci.yml/badge.svg)](https://github.com/jick-nice/dsh-purge-community-go/actions/workflows/ci.yml)
 [![license](https://img.shields.io/github/license/jick-nice/dsh-purge-community-go?color=blue)](LICENSE)
+[![platform](https://img.shields.io/badge/platform-Android%20%2F%20proot-informational)](https://github.com/jick-nice/dsh-purge-community-go/releases)
 
-当前版本 **1.0.0** · 适配 **dsh-go 0.2.x**（Android / proot，不需要 root） · [English](README.en.md)
+当前版本 **1.0.0** · 适配 **dsh-go 0.2.x**（Android / proot，不需要 root）
+
+简体中文（主文档） · [English](README.en.md)
 
 [安装](#安装) · [面板](#装完你会看到什么) · [命令](#常用操作) · [补丁](#88-条补丁怎么读) · [限制](#已知限制)
 

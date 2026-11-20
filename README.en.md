@@ -9,8 +9,11 @@
 [![release](https://img.shields.io/github/v/release/jick-nice/dsh-purge-community-go?label=release&color=2ea44f)](https://github.com/jick-nice/dsh-purge-community-go/releases)
 [![ci](https://github.com/jick-nice/dsh-purge-community-go/actions/workflows/ci.yml/badge.svg)](https://github.com/jick-nice/dsh-purge-community-go/actions/workflows/ci.yml)
 [![license](https://img.shields.io/github/license/jick-nice/dsh-purge-community-go?color=blue)](LICENSE)
+[![platform](https://img.shields.io/badge/platform-Android%20%2F%20proot-informational)](https://github.com/jick-nice/dsh-purge-community-go/releases)
 
-Version **1.0.0** · targets **dsh-go 0.2.x** (Android / proot, no root) · [简体中文](README.md)
+Version **1.0.0** · targets **dsh-go 0.2.x** (Android / proot, no root)
+
+English · [简体中文（主文档）](README.md)
 
 [Install](#install) · [Panel](#what-you-get) · [Commands](#everyday-commands) · [Patches](#reading-the-88-patches) · [Limits](#known-limits)
 
