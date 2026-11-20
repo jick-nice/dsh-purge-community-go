@@ -1,19 +1,19 @@
 {
   "name": "dsh-purge-community-go",
   "version": "1.0.0",
-  "builtAt": "2026-11-20T15:26:36.354Z",
+  "builtAt": "2026-11-20T16:42:59.729Z",
   "node": "v22.23.4",
   "platform": "win32-x64",
   "artifacts": [
     {
       "file": "dsh-purge-community-go-1.0.0.tar.gz",
-      "bytes": 166026,
-      "sha256": "231dccc652a0f86dd7574e46e93100790b88c472e0edab9f30f304a80afb8d99"
+      "bytes": 170687,
+      "sha256": "68ded26f5327cb0d1dde372dd7a87c55dad3799e0e64b7bd8321a029a8089c27"
     },
     {
       "file": "dsh-purge-community-go-1.0.0.zip",
-      "bytes": 197055,
-      "sha256": "eaa5651f9a95855f9e04e889ff27ac6792b807db51891a398d47e0927125e419"
+      "bytes": 202468,
+      "sha256": "db2f2c504fc6e812dfe495cdcf32cc8cda16348309055d6d3dbb50d3a7a532a0"
     }
   ],
   "files": [
@@ -99,8 +99,8 @@
     },
     {
       "path": "lib/commands.js",
-      "bytes": 15908,
-      "sha256": "8f7d87c0e2e43bd9d3a0fb0763394279619ddcdc7b7059081448c68d7ede905a"
+      "bytes": 17913,
+      "sha256": "3174774504e6bb33b20c1f13eee76838be4ecb97adea36b9a42924cf56911ed3"
     },
     {
       "path": "lib/community.js",
@@ -109,8 +109,8 @@
     },
     {
       "path": "lib/dshgo.js",
-      "bytes": 18482,
-      "sha256": "6809578607e2deaba7ad9f179d022173c0f27fddcf56f5830ca7ce22b1d994c5"
+      "bytes": 23215,
+      "sha256": "a7cb2be93c889880559bdc86481c15f9f4fc843563cfe23b8b13f2e8b87b3125"
     },
     {
       "path": "lib/home.js",
@@ -124,8 +124,8 @@
     },
     {
       "path": "lib/native.js",
-      "bytes": 4039,
-      "sha256": "7fb278ba2e1a2a5ccfc8bc9812558eb949dd92aa8ae4a5aea4522c52979da8d9"
+      "bytes": 5454,
+      "sha256": "4c0343c3edf45993f2a11bdf5438e4d7934c40a6cdd1581045fb0171640eae79"
     },
     {
       "path": "lib/ops.js",
@@ -159,8 +159,8 @@
     },
     {
       "path": "lib/tools.js",
-      "bytes": 28119,
-      "sha256": "76d2311973fbfbd92cc1c288fd69454a683e955ac5e65b3935d547f8ad408f45"
+      "bytes": 29434,
+      "sha256": "4f2e79d403dafff26011ec0189b4802331bdc23ceebc828eac7c0154121bcec5"
     },
     {
       "path": "lib/view.js",
@@ -228,6 +228,11 @@
       "sha256": "359a0ba962b0f98893bdb05d95f99c7cc43f2563dee6ade97c42a7e8c41559b5"
     },
     {
+      "path": "test/classify.test.js",
+      "bytes": 3488,
+      "sha256": "11ace60906c5dd5b0cc71394d8f9aa2ce0f88e628a79230d71baa894ad502dae"
+    },
+    {
       "path": "test/core-apply.test.js",
       "bytes": 7110,
       "sha256": "35fbd5a7f21eddc6d53b81824f4bae64e1cd39e3fb013bbed39fee6a8266b80f"
@@ -249,8 +254,8 @@
     },
     {
       "path": "test/plugin-smoke.test.js",
-      "bytes": 4898,
-      "sha256": "d9065126265a643912656273036d5002e5a2bd26e2b38834591a39eff18023ed"
+      "bytes": 5189,
+      "sha256": "75af160a23212e72fca0f9a8f1a8ae24224596cfddcb9bbdd6163cc5629f0ee1"
     },
     {
       "path": "test/prompt.test.js",
@@ -274,8 +279,8 @@
     },
     {
       "path": "test/view.test.js",
-      "bytes": 4815,
-      "sha256": "faefa05534c807a084de8e806802172b0f65da39c92af75dfa88ba2224c19ac9"
+      "bytes": 5063,
+      "sha256": "851084d8687539f8fda3d7ff97177cd752dd82c723825c29f9d20d408e1e2d4e"
     }
   ]
 }

@@ -68,9 +68,11 @@ test('installNative：注册 strip + panel，骨架只含绑定路径', async ()
     assert.ok(data, '应当推过一次数据')
     assert.equal(typeof data.summary, 'string')
     assert.equal(typeof data.patchText, 'string')
-    assert.ok(data.patchCaption.includes('手机适用'))
+    // caption 现在只说「还差什么」，不再重复分子分母
+    assert.ok(data.patchCaption.length > 0)
+    assert.ok(/等着打|生效|桌面专属|这版引擎没有/.test(data.patchCaption), data.patchCaption)
     assert.ok(data.extras.includes('位置 head'))
-    assert.ok(Array.isArray(data.tables))
+    assert.ok(Array.isArray(data.detail))
 
     // 事件被清掉后不再重注册；refresh 按钮只 toast
     const refreshed = bridge.captured.panel.spec.actions.refresh()
@@ -109,8 +111,8 @@ test('安装后的按钮：开关注入真的改状态，还原补丁在没有�
     const result = await one.result()
     assert.equal(typeof result.toast, 'string')
 
-    const boost = actions.boost()
-    assert.ok(String(boost.toast).includes('强化段'))
+    // 面板按钮上限 4 个：重读 / 一键注入 / 开关注入 / 还原补丁（boost 走 /purge boost）
+    assert.deepEqual(Object.keys(actions).sort(), ['oneClick', 'patchRevert', 'refresh', 'toggle'])
   } finally {
     clean(home, root)
   }
