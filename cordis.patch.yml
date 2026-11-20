@@ -1,0 +1,23 @@
+# dsh-purge-community-go：把插件插进宿主 profile 的插件列表。
+# id 与 name 都写包名，宿主按 name 去 profile 的 node_modules / 安装目录里解析。
+#
+# 这里只做 insert，不写 `- id: system-prompt / config:`：
+# dsh-go 的宿主装配不保证支持按 id 合并第三方 config 的那套写法，
+# 而「丢官方身份段」这件事已经在 lib/assemble.js 的 system-prompt/assemble
+# waterfall 里做了（harness:identity / deployment:persona-* 直接压掉），
+# 不依赖外部 YAML 生效。
+- insert:
+    - id: dsh-purge-community-go
+      name: dsh-purge-community-go
+      inject: [systemPrompt, tools]
+      config:
+        enabled: true
+        dropConflicts: true
+        capabilityProtocol: true
+        categories: true
+        stripMnemon: true
+        seedPrompt: true
+        recoverRefusal: true
+        verbose: false
+        postPrompt: ""
+        postPromptOrder: 5100

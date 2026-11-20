@@ -1,0 +1,34 @@
+dsh-purge-community-go
+======================
+
+本包是「破甲」能力的 **dsh-go（Android / proot）移植版**，由两个上游项目拼起来：
+
+1. dsh-purge-community（社区维护版破甲）
+   https://github.com/kingcharleslzy-ai/dsh-purge
+   License: MIT（见 LICENSE-community）
+
+   本包从这里取走的是「内容」：
+   - 88 条引擎源码补丁表（lib/patches/*.mjs → 本包 patches/patches.json）
+   - 注入正文（同一份明文，本包用自己的盐重新封装成 lib/asset-table.json）
+   - 运行时开关的语义：boost 尾部强化段、injectPosition、运行时探针、能力选用协议段
+   - 题材分类扩展层（Scoped Rules 26+ / 意图映射扩展行）
+
+2. dsh-purge-go
+   https://github.com/NANA7MI0/dsh-purge-go
+   License: AGPL-3.0（见 LICENSE）
+
+   本包从这里取走的是「形态」：
+   - dsh-go 原生插件协议接线：cordis.patch.yml、package.json 的 dshGo 清单、
+     dshGo 桥（胶囊 / 面板 / 状态条）、工具卡
+   - system-prompt/assemble waterfall 的注入与段压制实现
+   - 补丁执行器骨架（探测 / 事务式应用 / 备份 / 还原 / node --check 校验）
+   - 拒答续跑、变体与按模型指定、原子落盘
+
+3. 更上游的原作者
+   dsh-purge 最初由 小杨 / YuJunZhiXue 编写；社区版在其之上维护。
+
+本包没有改模型权重、不发网络请求、不收集任何数据；所有改动都落在本机的
+$DSH_HOME 与引擎包（node_modules/@deepseek-ai）里的字符串常量上。
+
+正文与补丁表都是「同一份内容的另一种封装」，不是重新写的。许可证按上游中最严格的
+那份（AGPL-3.0）适用；MIT 部分的原文保留在 LICENSE-community。

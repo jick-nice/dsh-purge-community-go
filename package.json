@@ -1,0 +1,114 @@
+{
+  "name": "dsh-purge-community-go",
+  "version": "1.0.0",
+  "description": "把 dsh-purge-community（社区维护版破甲）搬成 dsh-go 手机端原生插件：社区版的提示词正文 + 88 条引擎源码补丁，配 dsh-go 的原生胶囊/面板/状态条。桌面版的 Electron、asar 解包、Windows 计划任务、Web slot 面板在 Android 上没有落点，全部丢弃。",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./view": "./lib/view.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json",
+    "./patches/core": "./patches/lib/core.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "license": "AGPL-3.0",
+  "scripts": {
+    "test": "node scripts/run-tests.mjs",
+    "patches:export": "node scripts/export-community-patches.mjs --community ../dsh-purge-community",
+    "prompt:reseal": "node scripts/reseal-prompt.mjs --community ../dsh-purge-community",
+    "probe": "node patches/purge-patch.mjs probe",
+    "apply": "node patches/purge-patch.mjs apply",
+    "kit": "node scripts/kit-check.mjs",
+    "smoke": "node scripts/engine-smoke.mjs",
+    "build:dist": "node scripts/build-dist.mjs",
+    "dist:check": "node scripts/build-dist.mjs --no-verify"
+  },
+  "engines": {
+    "dsh": ">=0.2.1-rc.2 <0.3.0-0",
+    "node": ">=20"
+  },
+  "author": "NANA7MI0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jick-nice/dsh-purge-community-go.git"
+  },
+  "homepage": "https://github.com/jick-nice/dsh-purge-community-go#readme",
+  "bugs": {
+    "url": "https://github.com/jick-nice/dsh-purge-community-go/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-go",
+    "dsh-plugin",
+    "purge",
+    "破甲",
+    "prompt-injection",
+    "unrestricted"
+  ],
+  "files": [
+    "install.sh",
+    "lib",
+    "patches",
+    "assets/categories.json",
+    "cordis.patch.yml",
+    "LICENSE",
+    "LICENSE-community",
+    "NOTICE",
+    "README.en.md",
+    "README.md",
+    "CHANGELOG.md",
+    "docs",
+    "scripts"
+  ],
+  "dshGo": {
+    "v": 1,
+    "title": {
+      "zh": "破甲",
+      "en": "Purge"
+    },
+    "icon": "wrench",
+    "contributes": {
+      "composer.actions": [
+        {
+          "id": "purge-status",
+          "label": {
+            "zh": "破甲状态",
+            "en": "Status"
+          },
+          "icon": "wrench",
+          "effect": {
+            "type": "open",
+            "page": "panel:status"
+          }
+        }
+      ],
+      "panels": [
+        {
+          "id": "status",
+          "title": {
+            "zh": "破甲状态",
+            "en": "Purge status"
+          },
+          "icon": "wrench",
+          "placement": [
+            "session.tab",
+            "chat.panel",
+            "features"
+          ]
+        }
+      ],
+      "composer.strip": [
+        {
+          "id": "purge-alert",
+          "icon": "warning",
+          "panel": "status"
+        }
+      ]
+    }
+  }
+}
