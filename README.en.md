@@ -11,7 +11,7 @@
 [![license](https://img.shields.io/github/license/jick-nice/dsh-purge-community-go?color=blue)](LICENSE)
 [![platform](https://img.shields.io/badge/platform-Android%20%2F%20proot-informational)](https://github.com/jick-nice/dsh-purge-community-go/releases)
 
-Version **1.0.1** · targets **dsh-go 0.2.x** (Android / proot, no root)
+Version **1.0.2** · targets **dsh-go 0.2.x** (Android / proot, no root)
 
 English · [简体中文（主文档）](README.md)
 
@@ -88,7 +88,7 @@ From the release artifact instead of git:
 
 ```sh
 mkdir -p ~/src && cd ~/src
-curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.1/dsh-purge-community-go-1.0.1.tar.gz
+curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.2/dsh-purge-community-go-1.0.2.tar.gz
 sha256sum pg.tar.gz     # compare with SHA256SUMS on the release page
 tar -xzf pg.tar.gz && mv dsh-purge-community-go ~/ && cd ~/dsh-purge-community-go
 sh install.sh

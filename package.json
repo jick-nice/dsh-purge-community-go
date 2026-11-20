@@ -1,6 +1,6 @@
 {
   "name": "dsh-purge-community-go",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "把 dsh-purge-community（社区维护版破甲）搬成 dsh-go 手机端原生插件：社区版的提示词正文 + 88 条引擎源码补丁，配 dsh-go 的原生胶囊/面板/状态条。桌面版的 Electron、asar 解包、Windows 计划任务、Web slot 面板在 Android 上没有落点，全部丢弃。",
   "type": "module",
   "main": "lib/index.js",

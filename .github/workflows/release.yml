@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "要发布的 tag（例如 v1.0.1；留空则用当前 ref）"
+        description: "要发布的 tag（例如 v1.0.2；留空则用当前 ref）"
         required: false
 
 permissions:
