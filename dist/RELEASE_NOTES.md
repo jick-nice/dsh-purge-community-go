@@ -8,10 +8,10 @@
 
 | 文件 | 大小 | SHA-256 |
 |---|---|---|
-| `dsh-purge-community-go-1.0.0.tar.gz` | 169.7 KB | `a1e4ca8e1301959e7948a2b30f26bbb14b54133f8facdbf495fec8038e6ccbcd` |
-| `dsh-purge-community-go-1.0.0.zip` | 203.4 KB | `da9bcf845604d733dfbcc3d3f1ece77422d9d0731ed78b03dac3cb53788ea067` |
+| `dsh-purge-community-go-1.0.0.tar.gz` | 166.7 KB | `f1c79a526048fc84ce8f588924a189f9b3b9c62fdb7fb0867bb4c6a31faa7d06` |
+| `dsh-purge-community-go-1.0.0.zip` | 197.2 KB | `9a4e4d116f130c3167a07618532dde24b5ad6471146c5ba531e609cf8e7f3cd0` |
 
-构建时间：2026-11-20T15:13:07.197Z · Node v22.23.4 · win32-x64
+构建时间：2026-11-20T15:15:38.222Z · Node v22.23.4 · win32-x64
 
 ## 手机安装（Android + proot）
 

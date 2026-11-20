@@ -1,52 +1,22 @@
 {
   "name": "dsh-purge-community-go",
   "version": "1.0.0",
-  "builtAt": "2026-11-20T15:13:07.197Z",
+  "builtAt": "2026-11-20T15:15:38.222Z",
   "node": "v22.23.4",
   "platform": "win32-x64",
   "artifacts": [
     {
       "file": "dsh-purge-community-go-1.0.0.tar.gz",
-      "bytes": 173799,
-      "sha256": "a1e4ca8e1301959e7948a2b30f26bbb14b54133f8facdbf495fec8038e6ccbcd"
+      "bytes": 170725,
+      "sha256": "f1c79a526048fc84ce8f588924a189f9b3b9c62fdb7fb0867bb4c6a31faa7d06"
     },
     {
       "file": "dsh-purge-community-go-1.0.0.zip",
-      "bytes": 208297,
-      "sha256": "da9bcf845604d733dfbcc3d3f1ece77422d9d0731ed78b03dac3cb53788ea067"
+      "bytes": 201962,
+      "sha256": "9a4e4d116f130c3167a07618532dde24b5ad6471146c5ba531e609cf8e7f3cd0"
     }
   ],
   "files": [
-    {
-      "path": ".github/workflows/ci.yml",
-      "bytes": 905,
-      "sha256": "7a0e039908f9ac07d950f7fe61eeafaec9ca469b51d70d38ee8914073be96ddd"
-    },
-    {
-      "path": ".github/workflows/release.yml",
-      "bytes": 1808,
-      "sha256": "c0a0937364b1e726f481d16c3e3d5df427cb7d3a5abbdcaf36984d2dd7b2a72a"
-    },
-    {
-      "path": ".gitignore",
-      "bytes": 264,
-      "sha256": "a1b20541d50bb35e42f59743a1403ae38dd8c0568e0005fc053aeee6077690d9"
-    },
-    {
-      "path": ".tmp-check.mjs",
-      "bytes": 2607,
-      "sha256": "4023659b7b928bd1c7bde39dd889ce130f8c245bf50be06f75b9ebe2235c754a"
-    },
-    {
-      "path": ".tmp-runinfo.mjs",
-      "bytes": 1735,
-      "sha256": "731d45e466c900eae3c676b17cc119f9be218ec251bf4ba2037d07e64f746299"
-    },
-    {
-      "path": ".tmp-zipcheck.mjs",
-      "bytes": 1915,
-      "sha256": "12184b4d5b3617bc39bfa54bba4fd65fd82c269f05c21b9acfb08af228c9abb3"
-    },
     {
       "path": "CHANGELOG.md",
       "bytes": 2580,
@@ -219,8 +189,8 @@
     },
     {
       "path": "scripts/build-dist.mjs",
-      "bytes": 9974,
-      "sha256": "6bf9f53682e2d652533d6ec7ce78b913f4c96644a59a8de3a74f03edd09976b8"
+      "bytes": 10560,
+      "sha256": "63dc2cb28c90d2e3fd588f55b244317d8e53bac9d92d3ee67a41f74f2cff2a84"
     },
     {
       "path": "scripts/embed-default-prompt.mjs",

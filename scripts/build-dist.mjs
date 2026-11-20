@@ -4,14 +4,17 @@
  *
  *   node scripts/build-dist.mjs [--no-verify]
  *
- * 为什么要产物：手机端拿到的是一个可解包的目录（用 git 拉也行，但 release 包更省事，
- * 而且带 SHA256SUMS 能核对有没有传坏）。
+ * 流程：先把要发布的文件按**白名单**复制到临时 stage 目录，再从 stage 打包。
+ * 这样 `.git` / `dist` / `node_modules` / 日志天然进不去——用 --exclude/ -x 那种黑名单
+ * 在 zip 上很容易失手（`-x dir` 只排除同名文件，不排除目录内容），曾经因此发出过一个
+ * 1.3 MB 的「zip」。
  *
- * 实现说明：
- *   - 打包用系统 tar（Linux / macOS / Windows 10+ / proot 都有）；zip 在有 zip 命令时顺手产出，
- *     Windows 上退回 PowerShell 的 Compress-Archive，都没有就只出 tar.gz，不报错。
- *   - 打完立刻解包到临时目录校验关键文件，避免打出一个空壳还上传。
- *   - 全部用 spawnSync + stdio:'ignore'：某些受限环境不允许管道捕获子进程输出。
+ * 其它约定：
+ *   - tar 用系统 tar（Linux / macOS / Windows 10+ / proot 都有）。
+ *   - zip 依次尝试：zip 命令 → bsdtar -a（Windows 自带 tar 就是 bsdtar）→ Compress-Archive，
+ *     写完查 PK 魔数；GNU tar 的 -a 只是「按扩展名自动压缩」，会把 tar 流写成 .zip。
+ *   - 打完解包回校验关键文件，避免把空壳发出去。
+ *   - 子进程一律 spawnSync + stdio:'ignore'：受限环境不允许管道捕获输出。
  */
 import fs from 'node:fs'
 import os from 'node:os'
@@ -22,8 +25,6 @@ import { fileURLToPath } from 'node:url'
 
 const HERE = path.dirname(fileURLToPath(import.meta.url))
 const PKG_DIR = path.dirname(HERE)
-/** 打包必须在仓库的上一级执行：归档里要带顶层目录 dsh-purge-community-go/。 */
-const PARENT = path.dirname(PKG_DIR)
 const OUT_DIR = path.join(PKG_DIR, 'dist')
 
 const pkg = JSON.parse(fs.readFileSync(path.join(PKG_DIR, 'package.json'), 'utf8'))
@@ -31,7 +32,24 @@ const NAME = pkg.name
 const VERSION = pkg.version
 const BASE = `${NAME}-${VERSION}`
 
-const EXCLUDES = ['.git', 'node_modules', 'dist', 'patch-probe.json', '*.log', '.DS_Store', 'backup-*']
+/** 发布包内容白名单：只放运行与文档需要的，测试也带上（体积小，用户能自检）。 */
+const INCLUDE = [
+  'lib',
+  'patches',
+  'assets',
+  'scripts',
+  'docs',
+  'test',
+  'package.json',
+  'cordis.patch.yml',
+  'install.sh',
+  'README.md',
+  'README.en.md',
+  'CHANGELOG.md',
+  'LICENSE',
+  'LICENSE-community',
+  'NOTICE',
+]
 
 /** 关键文件：缺任何一个都说明产物是空壳。 */
 const REQUIRED = [
@@ -50,7 +68,7 @@ const REQUIRED = [
   'NOTICE',
 ]
 
-function run(cmd, args, cwd = PARENT) {
+function run(cmd, args, cwd) {
   const result = spawnSync(cmd, args, { cwd, stdio: 'ignore' })
   return result.status === 0
 }
@@ -70,6 +88,18 @@ function isZip(file) {
   }
 }
 
+/** 按白名单把包目录复制到 stage/<NAME>/。 */
+function stagePackage(stageRoot) {
+  const dest = path.join(stageRoot, NAME)
+  fs.mkdirSync(dest, { recursive: true })
+  for (const entry of INCLUDE) {
+    const from = path.join(PKG_DIR, entry)
+    if (!fs.existsSync(from)) continue
+    fs.cpSync(from, path.join(dest, entry), { recursive: true })
+  }
+  return dest
+}
+
 function walk(dir, base = '') {
   const out = []
   for (const entry of fs.readdirSync(path.join(dir, base), { withFileTypes: true })) {
@@ -80,57 +110,56 @@ function walk(dir, base = '') {
   return out
 }
 
+/** 压缩包里的文件清单（用于 manifest：记录真正发布出去的文件）。 */
+function stagedFiles(stageRoot) {
+  return walk(path.join(stageRoot, NAME))
+    .map((rel) => rel.split(path.sep).join('/'))
+    .sort()
+}
+
 function main() {
   const noVerify = process.argv.includes('--no-verify')
 
   fs.rmSync(OUT_DIR, { recursive: true, force: true })
   fs.mkdirSync(OUT_DIR, { recursive: true })
 
+  const stageRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'dist-stage-'))
+  stagePackage(stageRoot)
+
+  const missing = REQUIRED.filter((rel) => !fs.existsSync(path.join(stageRoot, NAME, rel)))
+  if (missing.length) {
+    fs.rmSync(stageRoot, { recursive: true, force: true })
+    console.error(`✖ 待打包目录缺文件：${missing.join(', ')}（检查白名单 INCLUDE）`)
+    process.exit(1)
+  }
+
   // ── tar.gz ──────────────────────────────────────────────────────────
   const tarball = path.join(OUT_DIR, `${BASE}.tar.gz`)
-  const tarArgs = ['-czf', tarball]
-  for (const pattern of EXCLUDES) tarArgs.push(`--exclude=${pattern}`)
-  tarArgs.push(NAME)
-  if (!run('tar', tarArgs)) {
+  if (!run('tar', ['-czf', tarball, NAME], stageRoot)) {
+    fs.rmSync(stageRoot, { recursive: true, force: true })
     console.error('✖ tar 打包失败（找不到 tar 或权限不足）')
     process.exit(1)
   }
   console.log(`✔ ${path.relative(PKG_DIR, tarball)}  ${(fs.statSync(tarball).size / 1024).toFixed(1)} KB`)
 
   // ── zip（可选）─────────────────────────────────────────────────────
-  // 注意：GNU tar 的 -a 是「按扩展名自动压缩」，把 .zip 当普通 tar 写——产出有 600 KB 却不是 zip。
-  // 所以按平台选顺序，并且**不看退出码就当成功**：写完必须验 ZIP 魔数。
-  //   Windows：tar.exe 是 bsdtar，-a 能出真 zip；否则退 Compress-Archive。
-  //   Linux/macOS：先 zip 命令；再退 bsdtar -a。
   const zipFile = path.join(OUT_DIR, `${BASE}.zip`)
-  const excludes = EXCLUDES
-  const tryBsdtarZip = () => {
-    const args = ['-a', '-cf', zipFile]
-    for (const pattern of excludes) args.push(`--exclude=${pattern}`)
-    args.push(NAME)
-    return run('tar', args) && isZip(zipFile)
-  }
-  const tryZipCommand = () => {
-    const args = ['-qr', zipFile, NAME]
-    for (const pattern of excludes) args.push('-x', `${NAME}/${pattern}`)
-    return run('zip', args) && isZip(zipFile)
-  }
-  const tryCompressArchive = () => {
-    if (process.platform !== 'win32') return false
-    return (
-      run('powershell', [
-        '-NoProfile',
-        '-Command',
-        `Compress-Archive -Path '${PKG_DIR}\\${NAME}' -DestinationPath '${zipFile}' -Force`,
-      ]) && isZip(zipFile)
-    )
-  }
+  const tryZipCommand = () => run('zip', ['-qr', zipFile, NAME], stageRoot) && isZip(zipFile)
+  const tryBsdtarZip = () => run('tar', ['-a', '-cf', zipFile, NAME], stageRoot) && isZip(zipFile)
+  const tryCompressArchive = () =>
+    process.platform === 'win32' &&
+    run('powershell', [
+      '-NoProfile',
+      '-Command',
+      `Compress-Archive -Path '${path.join(stageRoot, NAME)}' -DestinationPath '${zipFile}' -Force`,
+    ]) &&
+    isZip(zipFile)
 
-  const zipAttempts = process.platform === 'win32'
+  const attempts = process.platform === 'win32'
     ? [tryBsdtarZip, tryCompressArchive, tryZipCommand]
     : [tryZipCommand, tryBsdtarZip, tryCompressArchive]
   let zipped = false
-  for (const attempt of zipAttempts) {
+  for (const attempt of attempts) {
     if (attempt()) {
       zipped = true
       break
@@ -140,19 +169,19 @@ function main() {
   if (zipped) console.log(`✔ ${path.relative(PKG_DIR, zipFile)}  ${(fs.statSync(zipFile).size / 1024).toFixed(1)} KB`)
   else console.log('· 跳过 zip（本机没有能产出合法 zip 的工具），tar.gz 已足够')
 
-  // ── 校验：解包到临时目录，核对关键文件 ───────────────────────────────
+  // ── 校验：解包到另一个临时目录，核对关键文件与版本 ─────────────────
   if (!noVerify) {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'dist-verify-'))
-    const ok = run('tar', ['-xzf', tarball, '-C', tmp])
+    const verifyDir = fs.mkdtempSync(path.join(os.tmpdir(), 'dist-verify-'))
+    const ok = run('tar', ['-xzf', tarball, '-C', verifyDir])
     if (!ok) {
       console.error('✖ 产物解包失败，不能发布')
       process.exit(1)
     }
-    const missing = REQUIRED.filter((rel) => !fs.existsSync(path.join(tmp, NAME, rel)))
-    const extracted = JSON.parse(fs.readFileSync(path.join(tmp, NAME, 'package.json'), 'utf8'))
-    fs.rmSync(tmp, { recursive: true, force: true })
-    if (missing.length) {
-      console.error(`✖ 产物缺文件：${missing.join(', ')}`)
+    const verifyMissing = REQUIRED.filter((rel) => !fs.existsSync(path.join(verifyDir, NAME, rel)))
+    const extracted = JSON.parse(fs.readFileSync(path.join(verifyDir, NAME, 'package.json'), 'utf8'))
+    fs.rmSync(verifyDir, { recursive: true, force: true })
+    if (verifyMissing.length) {
+      console.error(`✖ 产物缺文件：${verifyMissing.join(', ')}`)
       process.exit(1)
     }
     if (extracted.version !== VERSION) {
@@ -163,10 +192,7 @@ function main() {
   }
 
   // ── 清单 ────────────────────────────────────────────────────────────
-  const files = walk(PKG_DIR)
-    .filter((rel) => !rel.startsWith('dist' + path.sep) && !rel.startsWith('node_modules'))
-    .filter((rel) => !rel.startsWith('.git' + path.sep))
-    .sort()
+  const files = stagedFiles(stageRoot)
   const manifest = {
     name: NAME,
     version: VERSION,
@@ -174,22 +200,22 @@ function main() {
     node: process.version,
     platform: `${process.platform}-${process.arch}`,
     artifacts: [{ file: path.basename(tarball), bytes: fs.statSync(tarball).size, sha256: sha256(tarball) }],
-    files: files.map((rel) => ({
-      path: rel.split(path.sep).join('/'),
-      bytes: fs.statSync(path.join(PKG_DIR, rel)).size,
-      sha256: sha256(path.join(PKG_DIR, rel)),
-    })),
+    files: files.map((rel) => {
+      const full = path.join(stageRoot, NAME, ...rel.split('/'))
+      return { path: rel, bytes: fs.statSync(full).size, sha256: sha256(full) }
+    }),
   }
   if (zipped) manifest.artifacts.push({ file: path.basename(zipFile), bytes: fs.statSync(zipFile).size, sha256: sha256(zipFile) })
-  fs.writeFileSync(path.join(OUT_DIR, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8')
 
+  fs.rmSync(stageRoot, { recursive: true, force: true })
+
+  fs.writeFileSync(path.join(OUT_DIR, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8')
   const sums = manifest.artifacts.map((a) => `${a.sha256}  ${a.file}`).join('\n') + '\n'
   fs.writeFileSync(path.join(OUT_DIR, 'SHA256SUMS'), sums, 'utf8')
-  console.log('✔ dist/manifest.json  dist/SHA256SUMS')
+  console.log(`✔ dist/manifest.json（${files.length} 个文件）  dist/SHA256SUMS`)
 
   // ── 发布说明（Release 正文 / 仓库里也能直接看）───────────────────────
-  const notes = buildNotes(manifest)
-  fs.writeFileSync(path.join(OUT_DIR, 'RELEASE_NOTES.md'), notes, 'utf8')
+  fs.writeFileSync(path.join(OUT_DIR, 'RELEASE_NOTES.md'), buildNotes(manifest), 'utf8')
   console.log('✔ dist/RELEASE_NOTES.md')
 }
 
