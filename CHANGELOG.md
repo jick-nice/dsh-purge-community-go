@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 1.0.3 — 诊断报告能直接拿走
+
+1.0.2 的 `/purge diag` 只能看，手机上一段长文本不好复制。这一版：
+
+- 报告同时写到 `~/.dsh/dsh-purge/diag-report.txt`，用手机的文件管理器就能取走
+- 加了 `purge_diag` 工具（第九个），模型可以自己调完直接把结论念给你
+- 报告里多了一段**清单 id 与代码 id 的比对**：App 里胶囊不显示，最常见的原因就是
+  `package.json` 的 `dshGo.contributes` 与 `lib/` 注册的 id 对不上，这一行能一眼看出来
+- 原生目录不存在时直接给修法（`sh install.sh`），而不是只报 false
+
+---
+
 ## 1.0.2 — 排障入口
 
 真机上「原生界面」诊断页报 `插件已停用或找不到 /runtime/purge-alert`，但那台机器的机器上没有 stderr、

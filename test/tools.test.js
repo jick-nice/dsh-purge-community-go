@@ -17,12 +17,12 @@ function fakeCtx() {
   }
 }
 
-test('注册八个工具，名字齐全', () => {
+test('注册九个工具，名字齐全', () => {
   const home = tempHome()
   try {
     const { ctx, tools } = fakeCtx()
     const count = registerTools(ctx, { home, config: {}, warn: () => {} })
-    assert.equal(count, 8)
+    assert.equal(count, 9)
     assert.deepEqual(tools.map((t) => t.name), [
       'purge_status',
       'purge_apply',
@@ -32,11 +32,30 @@ test('注册八个工具，名字齐全', () => {
       'purge_tuning',
       'purge_probe',
       'purge_patch_apply',
+      'purge_diag',
     ])
     for (const tool of tools) {
       assert.ok(tool.description.length > 10, `${tool.name} 缺 description`)
       assert.equal(typeof tool.execute, 'function')
     }
+  } finally {
+    clean(home)
+  }
+})
+
+test('purge_diag：只读；没建原生目录时明确指出并给修法', async () => {
+  const home = tempHome()
+  try {
+    const { ctx, tools } = fakeCtx()
+    registerTools(ctx, { home, config: {}, warn: () => {} })
+    const diag = tools.find((t) => t.name === 'purge_diag')
+    const value = await diag.execute({})
+    assert.equal(value.ok, true)
+    assert.ok(value.report.includes('破甲原生界面诊断'))
+    assert.ok(value.report.includes('目录存在   false'))
+    assert.ok(value.report.includes('sh install.sh'), '应当给出一条修法')
+    assert.ok(value.savedTo.endsWith('diag-report.txt'))
+    assert.ok(fs.existsSync(value.savedTo), '报告要落盘，方便用文件管理器取走')
   } finally {
     clean(home)
   }

@@ -11,7 +11,7 @@
 [![license](https://img.shields.io/github/license/jick-nice/dsh-purge-community-go?color=blue)](LICENSE)
 [![platform](https://img.shields.io/badge/platform-Android%20%2F%20proot-informational)](https://github.com/jick-nice/dsh-purge-community-go/releases)
 
-Version **1.0.2** · targets **dsh-go 0.2.x** (Android / proot, no root)
+Version **1.0.3** · targets **dsh-go 0.2.x** (Android / proot, no root)
 
 English · [简体中文（主文档）](README.md)
 
@@ -88,7 +88,7 @@ From the release artifact instead of git:
 
 ```sh
 mkdir -p ~/src && cd ~/src
-curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.2/dsh-purge-community-go-1.0.2.tar.gz
+curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.3/dsh-purge-community-go-1.0.3.tar.gz
 sha256sum pg.tar.gz     # compare with SHA256SUMS on the release page
 tar -xzf pg.tar.gz && mv dsh-purge-community-go ~/ && cd ~/dsh-purge-community-go
 sh install.sh
@@ -120,10 +120,19 @@ To prove the injection reaches the model, run `/purge probe` and ask the model t
 /purge extra 18,19                include the two opt-in patches
 /purge prompt set /sdcard/x.md    replace the body from a file
 /purge cat list                   category overlay
+/purge diag                       native UI diagnostics (capsule missing)
+/purge env                        engine packages and patch target paths
 /purge home                       paths
 ```
 
-The same eight actions exist as tools: `purge_status`, `purge_apply`, `purge_revert`, `purge_prompt`, `purge_category`, `purge_tuning`, `purge_probe`, `purge_patch_apply`.
+The same nine actions exist as tools: `purge_status`, `purge_apply`, `purge_revert`, `purge_prompt`,
+`purge_category`, `purge_tuning`, `purge_probe`, `purge_patch_apply`, `purge_diag`.
+
+**Capsule missing, or the diagnostics page says "plugin disabled or not found"**: run `/purge diag`
+(or let the model call `purge_diag`). The report lists whether the native UI directory exists, whether the
+manifest ids match the ids registered by the code, which bridge methods are exposed, and how the last few
+registrations went. The same text is written to `~/.dsh/dsh-purge/diag-report.txt` so it can be pulled off
+the phone with a file manager.
 
 ## Reading the 88 patches
 

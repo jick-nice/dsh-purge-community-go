@@ -11,7 +11,7 @@
 [![license](https://img.shields.io/github/license/jick-nice/dsh-purge-community-go?color=blue)](LICENSE)
 [![platform](https://img.shields.io/badge/platform-Android%20%2F%20proot-informational)](https://github.com/jick-nice/dsh-purge-community-go/releases)
 
-当前版本 **1.0.2** · 适配 **dsh-go 0.2.x**（Android / proot，不需要 root）
+当前版本 **1.0.3** · 适配 **dsh-go 0.2.x**（Android / proot，不需要 root）
 
 简体中文（主文档） · [English](README.en.md)
 
@@ -94,7 +94,7 @@ am force-stop io.github.ccch1mneyyy.dsh_app    # 重启引擎，补丁这时才�
 
 ```sh
 mkdir -p ~/src && cd ~/src
-curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.2/dsh-purge-community-go-1.0.2.tar.gz
+curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.3/dsh-purge-community-go-1.0.3.tar.gz
 sha256sum pg.tar.gz     # 与 Release 页的 SHA256SUMS 对照
 tar -xzf pg.tar.gz && mv dsh-purge-community-go ~/ && cd ~/dsh-purge-community-go
 sh install.sh
@@ -126,10 +126,17 @@ node patches/purge-patch.mjs probe     # applicable / tally
 /purge extra 18,19                打默认关闭的两条补丁
 /purge prompt set /sdcard/x.md    用文件替换注入正文
 /purge cat list                   题材分类扩展层
+/purge diag                       原生界面诊断（胶囊不显示时用）
+/purge env                        引擎装了哪些包、补丁在找哪个文件
 /purge home                       相关路径
 ```
 
-八个工具同名对应：`purge_status`、`purge_apply`、`purge_revert`、`purge_prompt`、`purge_category`、`purge_tuning`、`purge_probe`、`purge_patch_apply`。AI 可以直接调，不需要你记命令。
+九个工具同名对应：`purge_status`、`purge_apply`、`purge_revert`、`purge_prompt`、`purge_category`、
+`purge_tuning`、`purge_probe`、`purge_patch_apply`、`purge_diag`。AI 可以直接调，不需要你记命令。
+
+**胶囊不显示 / 诊断页报「插件已停用或找不到」**：敲 `/purge diag`（或让 AI 跑 `purge_diag`）。
+报告会列出原生目录在不在、清单里的胶囊/面板/状态条 id 与代码是否一致、桥接暴露了哪些方法、
+最近几次注册成功还是报错。同一份内容也会写到 `~/.dsh/dsh-purge/diag-report.txt`，用文件管理器取走即可。
 
 ## 88 条补丁怎么读
 
