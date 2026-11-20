@@ -11,7 +11,7 @@
 [![license](https://img.shields.io/github/license/jick-nice/dsh-purge-community-go?color=blue)](LICENSE)
 [![platform](https://img.shields.io/badge/platform-Android%20%2F%20proot-informational)](https://github.com/jick-nice/dsh-purge-community-go/releases)
 
-Version **1.0.0** · targets **dsh-go 0.2.x** (Android / proot, no root)
+Version **1.0.1** · targets **dsh-go 0.2.x** (Android / proot, no root)
 
 English · [简体中文（主文档）](README.md)
 
@@ -88,7 +88,7 @@ From the release artifact instead of git:
 
 ```sh
 mkdir -p ~/src && cd ~/src
-curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.0/dsh-purge-community-go-1.0.0.tar.gz
+curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.1/dsh-purge-community-go-1.0.1.tar.gz
 sha256sum pg.tar.gz     # compare with SHA256SUMS on the release page
 tar -xzf pg.tar.gz && mv dsh-purge-community-go ~/ && cd ~/dsh-purge-community-go
 sh install.sh
@@ -133,12 +133,19 @@ The same eight actions exist as tools: `purge_status`, `purge_apply`, `purge_rev
 | `hit` | pattern present, not applied yet | tap Inject all |
 | `drifted` | applied before, wiped by an app update | tap Inject all |
 | `partial` | partly applied | none, the matching variant is in place |
-| `miss` | nothing matched | check the name; presets and desktop patches are harmless |
-| `no_pkg` | target package absent | none |
-| `no_file` | package present, file missing | none |
+| `miss` | this engine build has no such code | none |
+| `no_file` | this engine build has no such file | none |
 | `no_needle` | the entry has no usable pattern | none |
+| `no_pkg` | target package absent (desktop-only) | none |
 
-The denominator is the **phone-applicable count**, not 88. Desktop-only patches (7) and patches whose package is missing are excluded. Before patching, the panel shows "not applied" instead of a misleading fraction.
+The denominator is the **locally applicable count** = landed (`applied` + `partial`) + pending (`hit` + `drifted`).
+
+One real device on 0.2.2 reads `67/68`: 65 applied, 2 partial, 1 wiped by an app update, plus 11 that this
+engine build simply does not contain and 9 desktop-only. Those 20 stay out of the denominator and are never
+counted as work to do. One tap on Inject all turns it into `68/68` and the verdict reads "all normal".
+
+To see exactly what the inapplicable entries are looking for, run `/purge env`: it prints the packages found in
+the engine, each patch's target path, and how many patterns are still unmatched.
 
 Two patches are off by default: `#18` repeated-tool reminder and `#19` tool-result pruner. Enable them with `/purge extra 18,19`.
 

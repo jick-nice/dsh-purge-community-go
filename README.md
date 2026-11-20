@@ -11,7 +11,7 @@
 [![license](https://img.shields.io/github/license/jick-nice/dsh-purge-community-go?color=blue)](LICENSE)
 [![platform](https://img.shields.io/badge/platform-Android%20%2F%20proot-informational)](https://github.com/jick-nice/dsh-purge-community-go/releases)
 
-当前版本 **1.0.0** · 适配 **dsh-go 0.2.x**（Android / proot，不需要 root）
+当前版本 **1.0.1** · 适配 **dsh-go 0.2.x**（Android / proot，不需要 root）
 
 简体中文（主文档） · [English](README.en.md)
 
@@ -94,7 +94,7 @@ am force-stop io.github.ccch1mneyyy.dsh_app    # 重启引擎，补丁这时才�
 
 ```sh
 mkdir -p ~/src && cd ~/src
-curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.0/dsh-purge-community-go-1.0.0.tar.gz
+curl -L -o pg.tar.gz https://github.com/jick-nice/dsh-purge-community-go/releases/download/v1.0.1/dsh-purge-community-go-1.0.1.tar.gz
 sha256sum pg.tar.gz     # 与 Release 页的 SHA256SUMS 对照
 tar -xzf pg.tar.gz && mv dsh-purge-community-go ~/ && cd ~/dsh-purge-community-go
 sh install.sh
@@ -139,16 +139,23 @@ node patches/purge-patch.mjs probe     # applicable / tally
 | `hit` | 查找串在，还没打 | 点「一键注入」 |
 | `drifted` | 打过，被 App 更新冲掉 | 点「一键注入」 |
 | `partial` | 改了一部分 | 不用，命中那套已生效 |
-| `miss` | 一条都对不上 | 看名字：预设/桌面类不用管 |
-| `no_pkg` | 目标包没装 | 不用 |
-| `no_file` | 包在、文件不在 | 不用 |
-| `no_needle` | 这条数据本身缺查找串 | 不用 |
+| `miss` | 引擎这版没这段代码 | 不用 |
+| `no_file` | 引擎这版没这个文件 | 不用 |
+| `no_needle` | 补丁表里这条没查找串 | 不用 |
+| `no_pkg` | 目标包没装（桌面专属） | 不用 |
 
-分母是**手机适用条数**，不是 88。桌面专属（7 条）和目标包不存在的都不计入。没打补丁时面板显示「未打」，不显示容易误读的小数字。
+面板的分母是**本机可打的条数** = 已落地（`applied` + `partial`）+ 待打（`hit` + `drifted`）。
+
+真机上一台 0.2.2 的机器读数是 `67/68`：65 条已生效、2 条部分命中、1 条被 App 更新冲掉，
+剩下 11 条是「这版引擎没有」、9 条桌面专属 —— 这 20 条不进分母，也不催你处理。
+点一次「一键注入」就变成 `68/68`，结论行写「一切正常」。
+
+想看清「打不上的那 11 条到底在找什么」，敲 `/purge env`：会把引擎包装了哪些包、
+每条的目标路径、还剩几处没命中一次列出来。
 
 两条补丁默认关闭：`#18` 重复调用提醒、`#19` 工具结果修剪。要打就 `/purge extra 18,19`。
 
-**补丁不是永久的。** 更新 App 会重装引擎包，补丁全部丢失，红条会自己冒出来。点「一键注入」重打，然后重启。
+**补丁不是永久的。** 更新 App 会重装引擎包，补丁全部丢失，状态条会自己冒出来。点「一键注入」重打，然后重启。
 
 ## 和社区桌面版的差别
 
