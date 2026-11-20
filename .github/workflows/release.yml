@@ -1,0 +1,66 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "要发布的 tag（例如 v1.0.0；留空则用当前 ref）"
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 版本一致性：tag 去掉 v 必须等于 package.json 的 version，
+      # 否则产物名与 tag 对不上，用户会下到错的包。
+      - name: check tag matches package.json
+        run: |
+          REF="${{ github.event.inputs.tag || github.ref_name }}"
+          TAG="${REF#v}"
+          PKG=$(node -p "require('./package.json').version")
+          echo "tag=$TAG package=$PKG"
+          if [ "$TAG" != "$PKG" ]; then
+            echo "::error::tag ($TAG) 与 package.json ($PKG) 不一致"
+            exit 1
+          fi
+
+      - name: test
+        run: npm test
+
+      - name: build dist
+        run: node scripts/build-dist.mjs
+
+      - name: verify artifacts
+        run: |
+          ls -l dist
+          sha256sum -c dist/SHA256SUMS
+
+      - name: publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+          name: dsh-purge-community-go ${{ github.event.inputs.tag || github.ref_name }}
+          body_path: dist/RELEASE_NOTES.md
+          draft: false
+          prerelease: false
+          files: |
+            dist/dsh-purge-community-go-*.tar.gz
+            dist/dsh-purge-community-go-*.zip
+            dist/SHA256SUMS
+            dist/manifest.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

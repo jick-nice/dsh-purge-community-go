@@ -1,0 +1,296 @@
+{
+  "name": "dsh-purge-community-go",
+  "version": "1.0.0",
+  "builtAt": "2026-11-20T15:03:50.624Z",
+  "node": "v22.23.4",
+  "platform": "win32-x64",
+  "artifacts": [
+    {
+      "file": "dsh-purge-community-go-1.0.0.tar.gz",
+      "bytes": 171539,
+      "sha256": "9001ec90d057012e87d5b75f15c4f0c4835b3c969d395a37205206a92e8dd52e"
+    },
+    {
+      "file": "dsh-purge-community-go-1.0.0.zip",
+      "bytes": 204156,
+      "sha256": "fa0727fccf46ea424218b195b0e350409ea2866e8eb272de506169e389647057"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 883,
+      "sha256": "0e54d5300abe23198d0db6db9726ae322fc9d9b415aa4421ec37aff3f11848f3"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "bytes": 1786,
+      "sha256": "208e065556298085ad0508d2bb367f8e9fcc5b5448737a53084035893004f8a9"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 264,
+      "sha256": "a1b20541d50bb35e42f59743a1403ae38dd8c0568e0005fc053aeee6077690d9"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 2580,
+      "sha256": "11493e2478a1c59f1ab93e5340d843499383134607f775b94d934f130d65c350"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 35184,
+      "sha256": "e0eedba615d5cd1b986afb6c5b3a4b1ae33713e7e9dc74d19daec5e3221f9d2e"
+    },
+    {
+      "path": "LICENSE-community",
+      "bytes": 1084,
+      "sha256": "fc0852e0b944982eda5c38127faac27e14caaf09eee47c7e42682e64f01695cd"
+    },
+    {
+      "path": "NOTICE",
+      "bytes": 1738,
+      "sha256": "2ad944f953a8e2487a79710aa622dfd3bebecad2cd4dfe96fd83b6429cf97538"
+    },
+    {
+      "path": "README.en.md",
+      "bytes": 9623,
+      "sha256": "bf427e08786fbd5cdcc1145bbbb76045b395c3ce3e5a9ce5022416adebc89635"
+    },
+    {
+      "path": "README.md",
+      "bytes": 19234,
+      "sha256": "8736382bdca1afbbc001d0d781afbc96121c26ca38590e128567b1b1ac44c18f"
+    },
+    {
+      "path": "assets/categories.json",
+      "bytes": 3096,
+      "sha256": "83518b6c9d61bb86d9da238b484213b8ed683917a2b94433b96048b8c76e023a"
+    },
+    {
+      "path": "cordis.patch.yml",
+      "bytes": 931,
+      "sha256": "f95f16f0aae6ec99095e1b748a6cdf676829d2230396b8bf25cd34f294d09317"
+    },
+    {
+      "path": "docs/port-notes.en.md",
+      "bytes": 8867,
+      "sha256": "84b5865af7b96d1402dadea233702d899fd7b50b62e6aa97b93d9664ea3d4d35"
+    },
+    {
+      "path": "docs/port-notes.md",
+      "bytes": 9494,
+      "sha256": "c0bb3120df3af9ce656cced9655177f16184f32cf7fb16d2eca1445f222b6bc1"
+    },
+    {
+      "path": "install.sh",
+      "bytes": 8375,
+      "sha256": "548e6f4a0b587178ec13cb80ad3e140e9395fd314bfc2d1f2f046cafa223f95f"
+    },
+    {
+      "path": "lib/assemble.js",
+      "bytes": 7398,
+      "sha256": "fa39a219b72b500f141817f9d1e01381f49250748d9be0ea03347be9a96a55c4"
+    },
+    {
+      "path": "lib/asset-table.json",
+      "bytes": 15612,
+      "sha256": "13d9917de21a5ebf58a90e879fdd47bba8588e98d46b815b8b058aeec1ea2c66"
+    },
+    {
+      "path": "lib/capability.js",
+      "bytes": 1956,
+      "sha256": "325fb32954a697054ff41499dd6fb95028c41c69bb153212610d3b2e2f5e1d66"
+    },
+    {
+      "path": "lib/card.js",
+      "bytes": 1590,
+      "sha256": "df939a091902050f73ca8e5d7712d0ba0a5ab1065c65fa81b5ca91dea4b86e69"
+    },
+    {
+      "path": "lib/categories.js",
+      "bytes": 11249,
+      "sha256": "2b77c36b01b343a365353d5a8b9c57534a014a758e5148ce3430d96ab1cc315c"
+    },
+    {
+      "path": "lib/commands.js",
+      "bytes": 15908,
+      "sha256": "8f7d87c0e2e43bd9d3a0fb0763394279619ddcdc7b7059081448c68d7ede905a"
+    },
+    {
+      "path": "lib/community.js",
+      "bytes": 5966,
+      "sha256": "7b3ef06354355df337138fe293a6f9b86b3fcc5fa734f5f60e771078d7f450ee"
+    },
+    {
+      "path": "lib/dshgo.js",
+      "bytes": 18482,
+      "sha256": "6809578607e2deaba7ad9f179d022173c0f27fddcf56f5830ca7ce22b1d994c5"
+    },
+    {
+      "path": "lib/home.js",
+      "bytes": 3216,
+      "sha256": "22aebaa88c31749ba3b92ad6e1f3e4a07b4b9a9e9ca158e39aab5c52496770c1"
+    },
+    {
+      "path": "lib/index.js",
+      "bytes": 12658,
+      "sha256": "344ae3c62bac4c713d9fd3de87c60af5f411df4603919ab326c131a62d27458e"
+    },
+    {
+      "path": "lib/native.js",
+      "bytes": 4039,
+      "sha256": "7fb278ba2e1a2a5ccfc8bc9812558eb949dd92aa8ae4a5aea4522c52979da8d9"
+    },
+    {
+      "path": "lib/ops.js",
+      "bytes": 10586,
+      "sha256": "6e017fb69e24212a744d4190324fb2a7db1d8a340f701eb91f3c34fab0e18c7c"
+    },
+    {
+      "path": "lib/prompt.js",
+      "bytes": 7815,
+      "sha256": "e16f94647babf1ebb02368feb5ee47b699d9d0f6500dc63ff9d509e07b76b877"
+    },
+    {
+      "path": "lib/recover.js",
+      "bytes": 10387,
+      "sha256": "33b0003a3a16a099bef64c8f3686577658f97c8664d7b77f4778e5751f527c64"
+    },
+    {
+      "path": "lib/state.js",
+      "bytes": 2527,
+      "sha256": "bb40c5bc2834eb06c8b901c0d2ac5777f911823126eda9ab8419e31e876dfe5b"
+    },
+    {
+      "path": "lib/table-key.js",
+      "bytes": 1930,
+      "sha256": "7998a7c5f55a9bf6b292e5be2d89d9f7b061597f8009cf46a2bfe0c5806705db"
+    },
+    {
+      "path": "lib/table-read.js",
+      "bytes": 1108,
+      "sha256": "15a4123b5ce471f3861c4e379340245db14cbd8826b938f23a700b696e74793b"
+    },
+    {
+      "path": "lib/tools.js",
+      "bytes": 28119,
+      "sha256": "76d2311973fbfbd92cc1c288fd69454a683e955ac5e65b3935d547f8ad408f45"
+    },
+    {
+      "path": "lib/view.js",
+      "bytes": 11716,
+      "sha256": "858451dc65fa56ce877fa188e66a430b9008a880ba1019196ca784a1e3e69df0"
+    },
+    {
+      "path": "package.json",
+      "bytes": 2979,
+      "sha256": "a1eefa401621012f09f0ab0bbb10a7d92a9467cd3e11c59f0822570f7eef7454"
+    },
+    {
+      "path": "patches/lib/core.mjs",
+      "bytes": 26203,
+      "sha256": "dcb372b4be32834bc0c912ba79d4586c50bd8d3229b20dc869e5afdb292b7b02"
+    },
+    {
+      "path": "patches/patches.json",
+      "bytes": 184081,
+      "sha256": "8275cd56017e5497606ddb6d71d1d5761cb10b6c3c296d4f9353e0d910093d7b"
+    },
+    {
+      "path": "patches/purge-patch.mjs",
+      "bytes": 4269,
+      "sha256": "1fa8b1cfda6d9284a33630d0d9a19e404b4f01fcd3ee80fefa5563b2f9207f6d"
+    },
+    {
+      "path": "scripts/build-dist.mjs",
+      "bytes": 8968,
+      "sha256": "7ec7d818a80e09c757ef7ddbbec2b776e6f6dcb9a2b30f58103c5d9a8c0138b2"
+    },
+    {
+      "path": "scripts/embed-default-prompt.mjs",
+      "bytes": 1399,
+      "sha256": "bf3f4248281c7f911df61c949f57324e0c618d16a72c986aecb95b8b17c76f1c"
+    },
+    {
+      "path": "scripts/engine-smoke.mjs",
+      "bytes": 6227,
+      "sha256": "ddbf021311ad81f3e7bd0130d63e12d9c14ec55299c70b6a2c4e1438716bd517"
+    },
+    {
+      "path": "scripts/export-community-patches.mjs",
+      "bytes": 9263,
+      "sha256": "a5f25c404a5682a5e8fb6c9ebcdd5f30ff8599c992574b42f548f28934b0fb58"
+    },
+    {
+      "path": "scripts/kit-check.mjs",
+      "bytes": 1196,
+      "sha256": "23f0964aa61831103f120586ef421a62ce8fccabc373760ad39a67e4b4634008"
+    },
+    {
+      "path": "scripts/reseal-prompt.mjs",
+      "bytes": 2777,
+      "sha256": "6adf5cf3fd746ae9f8ca5b857abb6f4c1e1e7bbd646afd36791c563da3565402"
+    },
+    {
+      "path": "scripts/run-tests.mjs",
+      "bytes": 1302,
+      "sha256": "0594f0d3669149871e65dbc41942ad8a0ac5cd1b14b6a158faedfcf9c5bdd1c0"
+    },
+    {
+      "path": "test/assemble.test.js",
+      "bytes": 4435,
+      "sha256": "359a0ba962b0f98893bdb05d95f99c7cc43f2563dee6ade97c42a7e8c41559b5"
+    },
+    {
+      "path": "test/core-apply.test.js",
+      "bytes": 7110,
+      "sha256": "35fbd5a7f21eddc6d53b81824f4bae64e1cd39e3fb013bbed39fee6a8266b80f"
+    },
+    {
+      "path": "test/helpers.mjs",
+      "bytes": 1776,
+      "sha256": "499ff5f27b2349f85092ca4aed890960b5e609f752c8bd3dbfe7b977c8159a90"
+    },
+    {
+      "path": "test/load.test.js",
+      "bytes": 2666,
+      "sha256": "4ab0ca0c14e4624b0609733ff823fe67b1e0ff36c2bbf9aa16622cf48e54e0ff"
+    },
+    {
+      "path": "test/patch-table.test.js",
+      "bytes": 3328,
+      "sha256": "6543d1f8c8113de954e9bb7feb404d4d8f51b89775dfe2d87daf81a706a6719d"
+    },
+    {
+      "path": "test/plugin-smoke.test.js",
+      "bytes": 4898,
+      "sha256": "d9065126265a643912656273036d5002e5a2bd26e2b38834591a39eff18023ed"
+    },
+    {
+      "path": "test/prompt.test.js",
+      "bytes": 4104,
+      "sha256": "abefaf920b0accc97e3fca0d40af5ad76df0cd8441f6b8750d674f9fb4a8901d"
+    },
+    {
+      "path": "test/recover.test.js",
+      "bytes": 4181,
+      "sha256": "47d90ce51bce7c14885fcf0e2e46b37195c8868c70c2c51ff0de34c8a223f997"
+    },
+    {
+      "path": "test/tools.test.js",
+      "bytes": 5876,
+      "sha256": "471e1e771fe070658696d5a8d76661384710feb55a3bbfdbea444f1e6aafcc52"
+    },
+    {
+      "path": "test/tuning.test.js",
+      "bytes": 2861,
+      "sha256": "317959ffc2ce01439fa99fd533359a0619ef0ea2b265de764ed33113ee1de498"
+    },
+    {
+      "path": "test/view.test.js",
+      "bytes": 4815,
+      "sha256": "faefa05534c807a084de8e806802172b0f65da39c92af75dfa88ba2224c19ac9"
+    }
+  ]
+}

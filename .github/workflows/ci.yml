@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      # 本包零运行时依赖，不需要 npm ci；测试是进程内跑的（scripts/run-tests.mjs）。
+      - run: npm test
+      - name: build dist (dry, no upload)
+        run: node scripts/build-dist.mjs
+      - name: verify artifacts
+        run: |
+          ls -l dist
+          sha256sum -c dist/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-node${{ matrix.node }}
+          path: dist/*
+          if-no-files-found: error
